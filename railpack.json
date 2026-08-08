@@ -1,6 +1,17 @@
 {
   "$schema": "https://schema.railpack.com",
+  "provider": "java",
   "packages": {
     "java": "21"
+  },
+  "steps": {
+    "build": {
+      "commands": [
+        "cd Ecomm && ./mvnw clean package -DskipTests"
+      ]
+    }
+  },
+  "deploy": {
+    "startCommand": "cd Ecomm && java -jar target/*.jar"
   }
 }
