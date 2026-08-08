@@ -1,4 +1,4 @@
-const BASE_URL="http://localhost:8080"
+const BASE_URL = "https://north-wine-e-commerce-web-application-production.up.railway.app";
 
 function escapeForAttr(str) {
     return String(str).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
