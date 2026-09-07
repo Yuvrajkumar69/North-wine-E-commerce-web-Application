@@ -6,12 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface OrderRepository extends JpaRepository<Orders,Long> {
+public interface OrderRepository extends JpaRepository<Orders, Long> {
 
-   @Query("SELECT o from Orders o JOIN FETCH o.user")
+    @Query("SELECT o from Orders o JOIN FETCH o.user")
     List<Orders> findAllOrdersWithUsers();
 
     List<Orders> findByUser(User user);
 
+    Optional<Orders> findByRazorpayOrderId(String razorpayOrderId);
 }

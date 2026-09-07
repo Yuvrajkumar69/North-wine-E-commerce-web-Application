@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Orders — North &amp; Vine</title>
+  <title>Checkout — North &amp; Vine</title>
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
@@ -34,8 +34,7 @@
 
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#clothing-section">Clothing</a></li>
-        <li><a href="index.html#electronics-section">Electronics</a></li>
+        <li><a href="cart.html">Shopping Bag</a></li>
         <li class="nav-right-actions">
           <a href="wishlist.html" class="nav-icon-btn" aria-label="Wishlist" title="Wishlist">
             <i class="far fa-heart"></i>
@@ -52,20 +51,98 @@
     </div>
   </nav>
 
-  <!-- ORDERS CONTENT -->
-  <div class="orders-wrap">
-    <div class="section-head" style="margin-top: 20px;">
+  <!-- CHECKOUT CONTENT -->
+  <div class="shop-container">
+    <div class="checkout-layout">
       <div>
-        <span class="eyebrow">Purchase History</span>
-        <h2>My Orders</h2>
-      </div>
-      <div>
-        <a href="index.html" class="btn-outline-gold" style="font-size: 0.75rem;">Continue Shopping</a>
-      </div>
-    </div>
+        <div class="step-indicator">
+          <div class="step-item active">
+            <div class="step-badge">1</div>
+            <span>Shipping Information</span>
+          </div>
+          <div style="color:var(--paper-line);">&rarr;</div>
+          <div class="step-item active">
+            <div class="step-badge">2</div>
+            <span>Payment &amp; Review</span>
+          </div>
+        </div>
 
-    <div id="orders-container">
-      <div class="empty-state">Loading your order history&hellip;</div>
+        <div class="checkout-box">
+          <h3 class="display-serif" style="margin-bottom: 20px;">Shipping Details</h3>
+
+          <form id="checkoutForm" onsubmit="return handleCheckoutSubmit(event)">
+            <div class="row">
+              <div class="col-md-6 field">
+                <label for="shippingName">Full Name *</label>
+                <input type="text" id="shippingName" required placeholder="John Doe" />
+              </div>
+              <div class="col-md-6 field">
+                <label for="shippingEmail">Email Address *</label>
+                <input type="email" id="shippingEmail" required placeholder="john@example.com" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 field">
+                <label for="shippingPhone">Phone Number *</label>
+                <input type="tel" id="shippingPhone" required placeholder="7500554902" />
+              </div>
+              <div class="col-md-6 field">
+                <label for="shippingPincode">Postal / Pincode *</label>
+                <input type="text" id="shippingPincode" required placeholder="263139" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="shippingAddress">Street Address *</label>
+              <input type="text" id="shippingAddress" required placeholder="Durga City Center" />
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 field">
+                <label for="shippingCity">City *</label>
+                <input type="text" id="shippingCity" required placeholder="Haldwani" />
+              </div>
+              <div class="col-md-6 field">
+                <label for="shippingState">State *</label>
+                <input type="text" id="shippingState" required placeholder="Uttarakhand" />
+              </div>
+            </div>
+
+            <div style="margin-top: 24px;">
+              <button type="submit" id="payNowBtn" class="btn-wine w-100 justify-content-center" style="padding: 14px 28px; font-size: 0.9rem;">
+                Proceed to Secure Payment
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ORDER SUMMARY CARD -->
+      <div>
+        <div class="checkout-summary-card">
+          <h4 class="display-serif" style="color:#fff; margin-bottom: 18px; border-bottom:1px solid var(--ink-border); padding-bottom:12px;">Order Summary</h4>
+
+          <div id="checkout-summary-items">
+            <div style="color:var(--text-on-ink-soft); font-size:0.88rem;">Loading items&hellip;</div>
+          </div>
+
+          <div style="border-top:1px solid var(--ink-border); margin-top:20px; padding-top:16px;">
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span class="mono" style="color:var(--gold-light);">Free (Complimentary)</span>
+            </div>
+            <div class="summary-total" style="margin-top:12px;">
+              <span>Total Amount</span>
+              <span id="checkout-total-amount">₹0.00</span>
+            </div>
+          </div>
+
+          <div style="margin-top:20px; font-size:0.75rem; color:var(--text-on-ink-soft); text-align:center;">
+            <i class="fas fa-lock" style="color:var(--gold-light);"></i> 256-Bit SSL Encrypted Razorpay Test Checkout
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -121,13 +198,17 @@
     </div>
   </footer>
 
+  <!-- Razorpay Checkout SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/api.js"></script>
   <script src="js/cart.js"></script>
-  <script src="js/orders.js"></script>
+  <script src="js/wishlist.js"></script>
+  <script src="js/checkout.js"></script>
 </body>
 
 </html>

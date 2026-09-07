@@ -21,6 +21,7 @@ public class User {
 
     @NotBlank(message = "Email is required")
     @Email(message = "Email must be a valid address")
+    @Column(unique = true)
     private String email;
 
     // Accepted when a client sends JSON (register/login) but never sent back out in responses
@@ -28,6 +29,9 @@ public class User {
     @Size(min = 6, message = "Password must be at least 6 characters")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    /** Optional phone number for checkout contact details. */
+    private String phone;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
@@ -63,6 +67,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public List<Orders> getOrders() {

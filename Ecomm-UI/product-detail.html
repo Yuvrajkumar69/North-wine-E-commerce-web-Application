@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Orders — North &amp; Vine</title>
+  <title>Product Details — North &amp; Vine</title>
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
@@ -52,21 +52,29 @@
     </div>
   </nav>
 
-  <!-- ORDERS CONTENT -->
-  <div class="orders-wrap">
-    <div class="section-head" style="margin-top: 20px;">
-      <div>
-        <span class="eyebrow">Purchase History</span>
-        <h2>My Orders</h2>
-      </div>
-      <div>
-        <a href="index.html" class="btn-outline-gold" style="font-size: 0.75rem;">Continue Shopping</a>
-      </div>
+  <!-- BREADCRUMB & MAIN CONTAINER -->
+  <div class="shop-container">
+    <div style="padding-top: 24px;">
+      <a href="index.html" style="font-size: 0.85rem; color: var(--text-soft); font-weight: 500;">
+        &larr; Back to Shop
+      </a>
     </div>
 
-    <div id="orders-container">
-      <div class="empty-state">Loading your order history&hellip;</div>
+    <!-- Product Detail Slot -->
+    <div id="product-detail-container">
+      <div class="empty-state">Loading product details&hellip;</div>
     </div>
+
+    <!-- Related Products -->
+    <section class="section-block" id="related-section" style="border-top: 1px solid var(--paper-line); margin-top: 40px;">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">You may also like</span>
+          <h2>Related Products</h2>
+        </div>
+      </div>
+      <div id="related-products-grid" class="product-grid"></div>
+    </section>
   </div>
 
   <!-- AUTH MODAL -->
@@ -127,7 +135,8 @@
   <script src="js/auth.js"></script>
   <script src="js/api.js"></script>
   <script src="js/cart.js"></script>
-  <script src="js/orders.js"></script>
+  <script src="js/wishlist.js"></script>
+  <script src="js/product-detail.js"></script>
 </body>
 
 </html>

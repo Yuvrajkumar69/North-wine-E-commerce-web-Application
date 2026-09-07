@@ -12,7 +12,8 @@ import java.util.List;
 public class ProductService {
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
+
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
@@ -31,5 +32,20 @@ public class ProductService {
             throw new ResourceNotFoundException("Product not found with id " + id);
         }
         productRepository.deleteById(id);
+    }
+
+    public List<Product> getProductsByCategory(String category) {
+        return productRepository.findByCategoryIgnoreCase(category);
+    }
+
+    public List<Product> searchProducts(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return getAllProducts();
+        }
+        return productRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword.trim(), keyword.trim());
+    }
+
+    public List<String> getDistinctCategories() {
+        return productRepository.findDistinctCategories();
     }
 }

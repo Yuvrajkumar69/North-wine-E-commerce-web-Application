@@ -1,4 +1,4 @@
-// Shared UI helpers used across pages: toast notifications (replaces jarring alert() calls)
+// North & Vine Shared UI Helpers & Utilities
 
 function ensureToastStack() {
     let stack = document.querySelector(".toast-stack");
@@ -10,15 +10,29 @@ function ensureToastStack() {
     return stack;
 }
 
-function showToast(message, type = "success", duration = 3200) {
+function showToast(message, type = "success", duration = 3500) {
     const stack = ensureToastStack();
     const el = document.createElement("div");
-    el.className = "toast-msg" + (type === "error" ? " error" : "");
-    el.textContent = message;
+    el.className = "toast-msg " + type;
+
+    let iconClass = "fas fa-check-circle";
+    if (type === "error") iconClass = "fas fa-exclamation-circle";
+    else if (type === "info") iconClass = "fas fa-info-circle";
+
+    el.innerHTML = `<i class="${iconClass}"></i> <span>${escapeHtml(message)}</span>`;
     stack.appendChild(el);
+
     setTimeout(() => {
         el.style.opacity = "0";
-        el.style.transition = "opacity 0.2s ease";
-        setTimeout(() => el.remove(), 200);
+        el.style.transform = "translateY(8px)";
+        el.style.transition = "all 0.25s ease";
+        setTimeout(() => el.remove(), 250);
     }, duration);
+}
+
+function toggleMobileNav() {
+    const navLinks = document.querySelector(".nav-links");
+    if (navLinks) {
+        navLinks.classList.toggle("show");
+    }
 }

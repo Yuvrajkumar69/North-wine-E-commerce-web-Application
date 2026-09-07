@@ -4,6 +4,8 @@ package com.genie.Ecomm.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 public class OrderItem {
 
@@ -21,6 +23,10 @@ public class OrderItem {
     private Product product;
 
     private int quantity;
+
+    /** Snapshot of the product price at the time the order was placed. */
+    @Column(precision = 10, scale = 2)
+    private BigDecimal priceAtPurchase;
 
     public Long getId() {
         return id;
@@ -52,5 +58,13 @@ public class OrderItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public BigDecimal getPriceAtPurchase() {
+        return priceAtPurchase;
+    }
+
+    public void setPriceAtPurchase(BigDecimal priceAtPurchase) {
+        this.priceAtPurchase = priceAtPurchase;
     }
 }

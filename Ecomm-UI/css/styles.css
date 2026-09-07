@@ -1,28 +1,34 @@
 /* =========================================================
-   NORTH & VINE — Design tokens
-   A boutique department-store identity: deep bottle-green ink,
-   warm paper, brass accents. Prices rendered like real retail
-   tags (mono type, rotated chip) is the signature motif.
+   NORTH & VINE — Complete Design System & Stylesheet
+   Boutique Department Store E-Commerce Identity
+   Colors: Deep Bottle Ink, Warm Ivory Paper, Brass & Gold Accents
    ========================================================= */
 :root {
-  --ink: #16231c;
-  --ink-soft: #24352a;
-  --ink-border: #33473a;
-  --paper: #faf8f3;
-  --paper-deep: #f1ece0;
-  --paper-line: #e4ddcc;
-  --brass: #a9762f;
-  --brass-deep: #8a5f22;
-  --brass-light: #d9b876;
-  --wine: #6e2c3b;
-  --sage: #56705f;
-  --text: #201f1b;
-  --text-soft: #5b5a52;
-  --text-on-ink: #f2efe6;
-  --text-on-ink-soft: #b8c2b8;
-  --radius: 2px;
-  --shadow-card: 0 1px 2px rgba(22, 35, 28, 0.06), 0 6px 20px rgba(22, 35, 28, 0.05);
-  --shadow-lift: 0 10px 30px rgba(22, 35, 28, 0.16);
+  --ink: #121010;
+  --ink-soft: #1B1817;
+  --ink-card: #221E1D;
+  --ink-border: #36302D;
+  --paper: #121010;
+  --paper-card: #1A1716;
+  --paper-deep: #252120;
+  --paper-line: #332C29;
+  --gold: #C5A059;
+  --gold-deep: #A07F3B;
+  --gold-light: #E5C887;
+  --wine: #7A2234;
+  --wine-deep: #541421;
+  --wine-light: #9E3248;
+  --sage: #4E6857;
+  --sage-light: #2D3B32;
+  --text: #F5EFEC;
+  --text-soft: #BEB2A9;
+  --text-muted: #85776E;
+  --text-on-ink: #FAF6EF;
+  --text-on-ink-soft: #C8BEB6;
+  --radius: 4px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.4);
+  --shadow-lift: 0 16px 40px rgba(0, 0, 0, 0.6);
 }
 
 * { box-sizing: border-box; }
@@ -48,7 +54,7 @@ h1, h2, h3, h4, .display-serif {
 a { text-decoration: none; color: inherit; }
 
 :focus-visible {
-  outline: 2px solid var(--brass);
+  outline: 2px solid var(--gold);
   outline-offset: 2px;
 }
 
@@ -56,17 +62,15 @@ a { text-decoration: none; color: inherit; }
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
 
-/* ---------- utility: mono / eyebrow labels ---------- */
-.mono {
-  font-family: "IBM Plex Mono", "Courier New", monospace;
-}
+/* ---------- Typography & Utility Classes ---------- */
+.mono { font-family: "IBM Plex Mono", "Courier New", monospace; }
 
 .eyebrow {
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--brass-deep);
+  color: var(--gold-deep);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -76,7 +80,22 @@ a { text-decoration: none; color: inherit; }
   content: "";
   width: 18px;
   height: 1px;
-  background: var(--brass);
+  background: var(--gold);
+  display: inline-block;
+}
+
+.eyebrow.light { color: var(--gold-light); }
+.eyebrow.light::before { background: var(--gold-light); }
+
+.badge-discount {
+  background: var(--wine);
+  color: #fff;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 3px 7px;
+  border-radius: var(--radius);
+  letter-spacing: 0.05em;
   display: inline-block;
 }
 
@@ -88,7 +107,7 @@ a { text-decoration: none; color: inherit; }
   top: 0; left: 0; width: 100%;
   z-index: 1000;
   background: var(--ink);
-  border-bottom: 2px solid var(--brass);
+  border-bottom: 2px solid var(--gold);
 }
 
 .site-nav .nav-inner {
@@ -105,13 +124,16 @@ a { text-decoration: none; color: inherit; }
   font-family: "Fraunces", serif;
   font-style: italic;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   color: var(--text-on-ink);
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.brand-mark span { color: var(--brass-light); }
+.brand-mark span { color: var(--gold-light); font-style: normal; }
 
 .nav-links {
   display: flex;
@@ -131,33 +153,39 @@ a { text-decoration: none; color: inherit; }
   white-space: nowrap;
 }
 
-.nav-links a:hover { color: var(--brass-light); }
+.nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+
+.nav-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
 
 .nav-icon-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px; height: 36px;
+  width: 38px; height: 38px;
   color: var(--text-on-ink);
   border: 1px solid var(--ink-border);
   border-radius: 50%;
-  transition: border-color 0.15s ease, color 0.15s ease;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
   background: transparent;
   cursor: pointer;
   font-size: 0.95rem;
 }
 
-.nav-icon-btn:hover { border-color: var(--brass); color: var(--brass-light); }
+.nav-icon-btn:hover { border-color: var(--gold); color: var(--gold-light); background: rgba(197, 160, 89, 0.08); }
 
 .cart-badge {
   position: absolute;
-  top: -6px; right: -6px;
+  top: -5px; right: -5px;
   min-width: 18px;
   height: 18px;
   padding: 0 4px;
   border-radius: 50%;
-  background: var(--brass);
+  background: var(--gold);
   color: var(--ink);
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.65rem;
@@ -188,13 +216,21 @@ a { text-decoration: none; color: inherit; }
   padding: 0;
 }
 
-.link-btn:hover { color: var(--brass-light); }
+.link-btn:hover { color: var(--gold-light); }
 
-/* page offset so fixed nav never covers content */
+.mobile-nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-on-ink);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
 .page-body { padding-top: 68px; }
 
 /* ============================================================
-   HERO / CAROUSEL
+   HERO & CAROUSEL
    ============================================================ */
 #heroCarousel { position: relative; background: var(--ink); }
 
@@ -204,14 +240,14 @@ a { text-decoration: none; color: inherit; }
   min-height: 380px;
   max-height: 620px;
   object-fit: cover;
-  filter: saturate(0.92) brightness(0.86);
+  filter: saturate(0.92) brightness(0.85);
 }
 
 #heroCarousel .carousel-item::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(22,35,28,0.15) 0%, rgba(22,35,28,0.75) 100%);
+  background: linear-gradient(180deg, rgba(29,24,23,0.2) 0%, rgba(29,24,23,0.8) 100%);
   pointer-events: none;
 }
 
@@ -220,33 +256,30 @@ a { text-decoration: none; color: inherit; }
   left: 8%;
   bottom: 14%;
   text-align: left;
-  max-width: 520px;
+  max-width: 540px;
   z-index: 2;
 }
 
-.carousel-caption .eyebrow { color: var(--brass-light); margin-bottom: 14px; }
-.carousel-caption .eyebrow::before { background: var(--brass-light); }
-
 .carousel-caption h2 {
   color: #fff;
-  font-size: clamp(1.9rem, 4vw, 3rem);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
   line-height: 1.08;
   margin-bottom: 14px;
 }
 
 .carousel-caption p {
   color: var(--text-on-ink-soft);
-  font-size: 1.02rem;
-  margin-bottom: 22px;
+  font-size: 1.05rem;
+  margin-bottom: 24px;
 }
 
-.btn-brass {
+.btn-brass, .btn-gold {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--brass);
+  background: var(--gold);
   color: var(--ink);
-  border: 1px solid var(--brass);
+  border: 1px solid var(--gold);
   padding: 12px 26px;
   font-size: 0.8rem;
   letter-spacing: 0.08em;
@@ -257,15 +290,43 @@ a { text-decoration: none; color: inherit; }
   cursor: pointer;
 }
 
-.btn-brass:hover { background: var(--brass-deep); border-color: var(--brass-deep); transform: translateY(-1px); color: #fff; }
+.btn-brass:hover, .btn-gold:hover {
+  background: var(--gold-deep);
+  border-color: var(--gold-deep);
+  transform: translateY(-1px);
+  color: #fff;
+}
 
-.btn-outline-brass {
+.btn-wine {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--wine);
+  color: #fff;
+  border: 1px solid var(--wine);
+  padding: 12px 26px;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: var(--radius);
+  transition: background 0.15s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+.btn-wine:hover {
+  background: var(--wine-deep);
+  border-color: var(--wine-deep);
+  transform: translateY(-1px);
+}
+
+.btn-outline-gold {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   background: transparent;
-  color: var(--brass-light);
-  border: 1px solid var(--brass);
+  color: var(--gold-light);
+  border: 1px solid var(--gold);
   padding: 11px 25px;
   font-size: 0.8rem;
   letter-spacing: 0.08em;
@@ -276,25 +337,89 @@ a { text-decoration: none; color: inherit; }
   cursor: pointer;
 }
 
-.btn-outline-brass:hover { background: var(--brass); color: var(--ink); }
-
-#heroCarousel .carousel-indicators { bottom: 20px; }
-#heroCarousel .carousel-indicators [data-bs-target] {
-  width: 22px; height: 2px;
-  background: rgba(242,239,230,0.4);
-  border: none;
-}
-#heroCarousel .carousel-indicators .active { background: var(--brass); }
-
-#heroCarousel .carousel-control-prev,
-#heroCarousel .carousel-control-next { width: 6%; opacity: 0.7; }
+.btn-outline-gold:hover { background: var(--gold); color: var(--ink); }
 
 /* ============================================================
-   SECTIONS / PRODUCT GRID
+   SEARCH & FILTER BAR
+   ============================================================ */
+.search-filter-section {
+  background: var(--paper-deep);
+  border-bottom: 1px solid var(--paper-line);
+  padding: 20px 0;
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  min-width: 260px;
+  max-width: 440px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 16px 10px 40px;
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  background: var(--paper-card);
+  font-family: "Work Sans", sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.search-box .search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.category-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.category-pill {
+  padding: 7px 16px;
+  border: 1px solid var(--paper-line);
+  border-radius: 20px;
+  background: var(--paper-card);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--text-soft);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.category-pill:hover, .category-pill.active {
+  background: var(--wine);
+  color: #fff;
+  border-color: var(--wine);
+}
+
+/* ============================================================
+   PRODUCT CARDS & GRID
    ============================================================ */
 .shop-container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
-
-.section-block { padding: 64px 0 8px; }
+.section-block { padding: 50px 0 20px; }
 
 .section-head {
   display: flex;
@@ -302,22 +427,19 @@ a { text-decoration: none; color: inherit; }
   justify-content: space-between;
   margin-bottom: 28px;
   border-bottom: 1px solid var(--paper-line);
-  padding-bottom: 18px;
+  padding-bottom: 16px;
 }
 
-.section-head h2 {
-  font-size: 1.7rem;
-  margin: 6px 0 0;
-}
+.section-head h2 { font-size: 1.8rem; margin: 4px 0 0; }
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
 }
 
 .product-card {
-  background: var(--paper-deep);
+  background: var(--paper-card);
   border: 1px solid var(--paper-line);
   border-radius: var(--radius);
   overflow: hidden;
@@ -327,39 +449,71 @@ a { text-decoration: none; color: inherit; }
   position: relative;
 }
 
-.product-card:hover { box-shadow: var(--shadow-lift); transform: translateY(-3px); }
+.product-card:hover { box-shadow: var(--shadow-lift); transform: translateY(-4px); }
 
-.product-card .thumb {
+.product-card .thumb-wrap {
+  position: relative;
   aspect-ratio: 1 / 1;
-  background: #fff;
-  display: flex; align-items: center; justify-content: center;
+  background: var(--paper-deep);
   overflow: hidden;
   border-bottom: 1px solid var(--paper-line);
 }
 
-.product-card .thumb img {
+.product-card .thumb-wrap img {
   width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-.product-card .body { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.product-card:hover .thumb-wrap img { transform: scale(1.04); }
+
+.wishlist-card-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--paper-line);
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  z-index: 5;
+}
+
+.wishlist-card-btn:hover, .wishlist-card-btn.active {
+  background: var(--wine);
+  color: #fff;
+  border-color: var(--wine);
+}
+
+.product-card .body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
 
 .product-card .cat-label {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 0.62rem;
+  font-size: 0.64rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--sage);
+  color: var(--gold-deep);
 }
 
 .product-card h3 {
-  font-size: 1.02rem;
+  font-size: 1.05rem;
   font-weight: 600;
   margin: 0;
   line-height: 1.3;
 }
 
+.product-card h3 a { color: var(--text); transition: color 0.15s ease; }
+.product-card h3 a:hover { color: var(--wine); }
+
 .product-card .desc {
-  font-size: 0.83rem;
+  font-size: 0.84rem;
   color: var(--text-soft);
   margin: 0;
   display: -webkit-box;
@@ -374,17 +528,16 @@ a { text-decoration: none; color: inherit; }
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding-top: 6px;
+  padding-top: 10px;
 }
 
-/* signature: price rendered like a real retail price tag */
 .price-tag {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: var(--ink);
-  background: #fff;
-  border: 1px solid var(--brass);
+  color: var(--wine-deep);
+  background: var(--paper-deep);
+  border: 1px solid var(--gold);
   padding: 4px 10px 4px 16px;
   border-radius: 1px;
   position: relative;
@@ -399,8 +552,15 @@ a { text-decoration: none; color: inherit; }
   transform: translateY(-50%);
   width: 4px; height: 4px;
   border-radius: 50%;
-  background: var(--paper);
-  border: 1px solid var(--brass);
+  background: var(--gold);
+}
+
+.price-tag .was-price {
+  text-decoration: line-through;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  margin-right: 4px;
+  font-weight: 400;
 }
 
 .add-cart-btn {
@@ -414,63 +574,429 @@ a { text-decoration: none; color: inherit; }
   font-weight: 600;
   border-radius: var(--radius);
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease;
   display: inline-flex; align-items: center; gap: 6px;
 }
 
-.add-cart-btn:hover { background: var(--brass-deep); border-color: var(--brass-deep); }
+.add-cart-btn:hover { background: var(--wine); border-color: var(--wine); }
 
-.empty-state, .load-error {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 48px 20px;
-  color: var(--text-soft);
-  font-size: 0.95rem;
-  border: 1px dashed var(--paper-line);
+/* Skeleton Loading Shimmer */
+.skeleton-card {
+  background: #fff;
+  border: 1px solid var(--paper-line);
   border-radius: var(--radius);
+  overflow: hidden;
+  height: 340px;
+}
+
+.skeleton-anim {
+  background: linear-gradient(90deg, #f0ede6 25%, #e8e3d8 50%, #f0ede6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* ============================================================
-   FOOTER
+   PRODUCT DETAIL PAGE
    ============================================================ */
-.site-footer {
-  background: var(--ink);
-  color: var(--text-on-ink-soft);
-  margin-top: 90px;
-  padding: 56px 0 26px;
-  border-top: 1px solid var(--ink-border);
+.product-detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  padding: 48px 0 70px;
 }
 
-.site-footer h5 {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  color: var(--brass-light);
-  text-transform: uppercase;
+.gallery-main {
+  aspect-ratio: 1 / 1;
+  background: var(--paper-deep);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  overflow: hidden;
   margin-bottom: 16px;
 }
 
-.footer-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 9px; }
-.footer-list a, .footer-list li { font-size: 0.88rem; color: var(--text-on-ink-soft); }
-.footer-list a:hover { color: var(--brass-light); }
-
-.footer-bottom {
-  border-top: 1px solid var(--ink-border);
-  margin-top: 40px;
-  padding-top: 22px;
-  text-align: center;
-  font-size: 0.8rem;
-  color: var(--text-on-ink-soft);
+.gallery-main img {
+  width: 100%; height: 100%; object-fit: cover;
 }
 
-.footer-bottom strong { color: var(--brass-light); }
+.gallery-thumbs {
+  display: flex;
+  gap: 12px;
+}
+
+.gallery-thumb {
+  width: 72px; height: 72px;
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.15s ease;
+}
+
+.gallery-thumb.active, .gallery-thumb:hover {
+  opacity: 1;
+  border-color: var(--wine);
+}
+
+.gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.detail-title { font-size: 2.2rem; margin: 0; line-height: 1.15; }
+.detail-price-row { display: flex; align-items: center; gap: 16px; }
+
+.detail-price {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.detail-desc {
+  font-size: 1rem;
+  color: var(--text-soft);
+  line-height: 1.65;
+  border-top: 1px solid var(--paper-line);
+  border-bottom: 1px solid var(--paper-line);
+  padding: 18px 0;
+  margin: 0;
+}
+
+.detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
 
 /* ============================================================
-   AUTH MODAL
+   CART & SHOPPING BAG PAGE
+   ============================================================ */
+.cart-page-wrap {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 48px 24px 90px;
+}
+
+.cart-table-wrap {
+  background: var(--paper-card);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-card);
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  vertical-align: middle;
+}
+
+.cart-table th {
+  background: var(--ink-card);
+  color: var(--gold-light);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--paper-line);
+}
+
+.cart-table td {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--paper-line);
+  vertical-align: middle;
+  color: var(--text);
+}
+
+.cart-table tr:last-child td {
+  border-bottom: none;
+}
+
+.cart-thumb {
+  width: 120px;
+  height: 120px;
+  max-width: 120px;
+  max-height: 120px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--paper-line);
+  background: var(--paper-deep);
+  display: block;
+  flex-shrink: 0;
+}
+
+.qty-control {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  background: var(--paper-deep);
+  overflow: hidden;
+}
+
+.qty-control button {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  width: 32px;
+  height: 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.qty-control button:hover {
+  background: var(--wine);
+  color: #fff;
+}
+
+.qty-control span {
+  padding: 0 12px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.remove-btn {
+  background: transparent;
+  border: 1px solid var(--paper-line);
+  color: var(--text-soft);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.remove-btn:hover {
+  background: var(--wine);
+  color: #fff;
+  border-color: var(--wine);
+}
+
+.cart-summary {
+  max-width: 440px;
+  margin-left: auto;
+}
+
+.summary-card {
+  background: var(--paper-card);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  font-size: 0.92rem;
+  color: var(--text-soft);
+  border-bottom: 1px dashed var(--paper-line);
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  font-family: "IBM Plex Mono", monospace;
+}
+
+/* ============================================================
+   MULTI-STEP CHECKOUT PAGE
+   ============================================================ */
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+  padding: 48px 0 90px;
+}
+
+.step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--paper-line);
+  padding-bottom: 16px;
+}
+
+.step-badge {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--paper-deep);
+  border: 1px solid var(--paper-line);
+  color: var(--text-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.step-item.active .step-badge {
+  background: var(--wine);
+  color: #fff;
+  border-color: var(--wine);
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-soft);
+}
+
+.step-item.active { color: var(--wine); font-weight: 600; }
+
+.checkout-box {
+  background: var(--paper-card);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  padding: 32px;
+}
+
+.checkout-summary-card {
+  background: var(--ink-card);
+  color: var(--text-on-ink);
+  border: 1px solid var(--paper-line);
+  padding: 28px;
+  border-radius: var(--radius);
+  position: sticky;
+  top: 90px;
+}
+
+/* ============================================================
+   WISHLIST & ORDER CONFIRMATION
+   ============================================================ */
+.wishlist-wrap, .confirmation-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 24px 90px;
+}
+
+/* ============================================================
+   ORDERS & HISTORY STYLES
+   ============================================================ */
+.orders-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px 24px 90px;
+}
+
+.order-card {
+  background: var(--paper-card);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-card);
+}
+
+.order-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--paper-line);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.order-id {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.empty-state {
+  background: var(--paper-card);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.load-error {
+  background: var(--paper-card);
+  border: 1px solid var(--wine);
+  color: var(--gold-light);
+  padding: 20px;
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.confirmation-card {
+  background: var(--paper-card);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  padding: 40px;
+  text-align: center;
+  border-top: 4px solid var(--wine);
+}
+
+.confirmation-icon {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: var(--sage-light);
+  color: var(--sage);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem;
+  margin: 0 auto 20px;
+}
+
+/* ============================================================
+   STATUS BADGES
+   ============================================================ */
+.status-badge {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-badge.paid { background: var(--sage); color: #fff; }
+.status-badge.pending { background: var(--gold); color: var(--ink); }
+.status-badge.failed { background: var(--wine); color: #fff; }
+
+/* ============================================================
+   AUTH MODAL & TOASTS
    ============================================================ */
 .auth-overlay {
   position: fixed; inset: 0;
-  background: rgba(22,35,28,0.55);
+  background: rgba(18, 16, 16, 0.85);
   display: none;
   align-items: center; justify-content: center;
   z-index: 2000;
@@ -480,19 +1006,21 @@ a { text-decoration: none; color: inherit; }
 .auth-overlay.open { display: flex; }
 
 .auth-card {
-  background: var(--paper);
+  background: var(--paper-card);
   border-radius: var(--radius);
   width: 100%;
-  max-width: 380px;
-  padding: 34px 30px 28px;
+  max-width: 400px;
+  padding: 36px 32px 30px;
   box-shadow: var(--shadow-lift);
-  border-top: 3px solid var(--brass);
+  border: 1px solid var(--paper-line);
+  border-top: 4px solid var(--gold);
+  position: relative;
 }
 
-.auth-card h3 { font-size: 1.4rem; margin-bottom: 6px; }
-.auth-card .sub { font-size: 0.86rem; color: var(--text-soft); margin-bottom: 22px; }
+.auth-card h3 { font-size: 1.5rem; margin-bottom: 6px; color: var(--gold-light); }
+.auth-card .sub { font-size: 0.86rem; color: var(--text-soft); margin-bottom: 24px; }
 
-.field { margin-bottom: 16px; }
+.field { margin-bottom: 18px; }
 .field label {
   display: block;
   font-size: 0.72rem;
@@ -500,38 +1028,34 @@ a { text-decoration: none; color: inherit; }
   text-transform: uppercase;
   color: var(--text-soft);
   margin-bottom: 6px;
+  font-weight: 600;
 }
-.field input {
+.field input, .field textarea {
   width: 100%;
-  padding: 10px 12px;
+  padding: 11px 14px;
   border: 1px solid var(--paper-line);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--paper-deep);
   font-family: "Work Sans", sans-serif;
   font-size: 0.94rem;
   color: var(--text);
 }
-.field input:focus { outline: none; border-color: var(--brass); }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--gold); }
 
 .field-error { color: var(--wine); font-size: 0.76rem; margin-top: 5px; display: none; }
 .field-error.show { display: block; }
 
-.auth-switch { text-align: center; font-size: 0.84rem; margin-top: 16px; color: var(--text-soft); }
-.auth-switch button { background: none; border: none; color: var(--brass-deep); font-weight: 600; cursor: pointer; padding: 0; }
+.auth-switch { text-align: center; font-size: 0.84rem; margin-top: 18px; color: var(--text-soft); }
+.auth-switch button { background: none; border: none; color: var(--wine); font-weight: 600; cursor: pointer; padding: 0; }
 
 .auth-close {
   position: absolute; top: 16px; right: 18px;
-  background: none; border: none; font-size: 1.1rem; color: var(--text-soft); cursor: pointer;
+  background: none; border: none; font-size: 1.2rem; color: var(--text-soft); cursor: pointer;
 }
 
-.auth-card-wrap { position: relative; }
-
-/* ============================================================
-   TOASTS
-   ============================================================ */
 .toast-stack {
   position: fixed;
-  bottom: 22px; right: 22px;
+  bottom: 24px; right: 24px;
   z-index: 3000;
   display: flex;
   flex-direction: column;
@@ -541,144 +1065,79 @@ a { text-decoration: none; color: inherit; }
 .toast-msg {
   background: var(--ink);
   color: var(--text-on-ink);
-  border-left: 3px solid var(--brass);
-  padding: 13px 18px;
+  border-left: 4px solid var(--gold);
+  padding: 14px 20px;
   border-radius: var(--radius);
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   box-shadow: var(--shadow-lift);
-  min-width: 240px;
-  max-width: 340px;
-  animation: toast-in 0.2s ease;
+  min-width: 260px;
+  max-width: 360px;
+  animation: toast-in 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .toast-msg.error { border-left-color: var(--wine); }
+.toast-msg.success { border-left-color: var(--sage); }
 
 @keyframes toast-in {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================================
-   CART PAGE
+   FOOTER & RESPONSIVE
    ============================================================ */
-.cart-page-wrap { max-width: 1000px; margin: 0 auto; padding: 48px 24px 90px; }
-
-.cart-page-wrap .page-title { margin-bottom: 6px; }
-.cart-page-wrap .page-sub { color: var(--text-soft); font-size: 0.92rem; margin-bottom: 32px; }
-
-.cart-table-wrap {
-  background: var(--paper-deep);
-  border: 1px solid var(--paper-line);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
-table.cart-table { width: 100%; border-collapse: collapse; }
-table.cart-table th {
-  text-align: left;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-soft);
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--paper-line);
-  background: var(--paper);
-}
-table.cart-table td {
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--paper-line);
-  font-size: 0.92rem;
-  vertical-align: middle;
-}
-table.cart-table tr:last-child td { border-bottom: none; }
-
-.cart-thumb { width: 52px; height: 52px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--paper-line); background: #fff; }
-
-.qty-control {
-  display: inline-flex; align-items: center; gap: 10px;
-  border: 1px solid var(--paper-line);
-  border-radius: var(--radius);
-  padding: 4px 8px;
-  background: #fff;
-}
-.qty-control button {
-  background: none; border: none; font-size: 1rem; width: 20px; height: 20px;
-  cursor: pointer; color: var(--ink); font-weight: 600;
-}
-.qty-control span { font-family: "IBM Plex Mono", monospace; min-width: 16px; text-align: center; font-size: 0.85rem; }
-
-.remove-btn {
-  background: none; border: 1px solid var(--paper-line); color: var(--wine);
-  width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
-  display: inline-flex; align-items: center; justify-content: center;
-  transition: border-color 0.15s ease, background 0.15s ease;
-}
-.remove-btn:hover { border-color: var(--wine); background: rgba(110,44,59,0.06); }
-
-.cart-summary {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 26px;
-}
-
-.summary-card {
+.site-footer {
   background: var(--ink);
-  color: var(--text-on-ink);
-  padding: 26px 28px;
-  border-radius: var(--radius);
-  min-width: 300px;
-}
-
-.summary-row { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 10px; color: var(--text-on-ink-soft); }
-.summary-total {
-  display: flex; justify-content: space-between; align-items: baseline;
+  color: var(--text-on-ink-soft);
+  margin-top: 90px;
+  padding: 60px 0 28px;
   border-top: 1px solid var(--ink-border);
-  margin-top: 14px; padding-top: 14px;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 1.3rem; font-weight: 700; color: #fff;
 }
 
-.summary-card .btn-brass { width: 100%; justify-content: center; margin-top: 20px; }
-
-/* ============================================================
-   ORDERS PAGE
-   ============================================================ */
-.orders-wrap { max-width: 900px; margin: 0 auto; padding: 48px 24px 90px; }
-
-.order-card {
-  background: var(--paper-deep);
-  border: 1px solid var(--paper-line);
-  border-radius: var(--radius);
-  padding: 20px 22px;
+.site-footer h5 {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--gold-light);
+  text-transform: uppercase;
   margin-bottom: 16px;
 }
 
-.order-card .order-head {
-  display: flex; justify-content: space-between; align-items: center;
-  border-bottom: 1px solid var(--paper-line);
-  padding-bottom: 12px; margin-bottom: 12px;
-  flex-wrap: wrap; gap: 8px;
+.footer-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.footer-list a, .footer-list li { font-size: 0.88rem; color: var(--text-on-ink-soft); }
+.footer-list a:hover { color: var(--gold-light); }
+
+.footer-bottom {
+  border-top: 1px solid var(--ink-border);
+  margin-top: 44px;
+  padding-top: 24px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-on-ink-soft);
 }
 
-.order-card .order-id { font-family: "IBM Plex Mono", monospace; font-size: 0.85rem; color: var(--text-soft); }
-.order-status {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
-  background: var(--sage); color: #fff; padding: 4px 10px; border-radius: 12px;
-}
-.order-line { display: flex; justify-content: space-between; font-size: 0.88rem; padding: 4px 0; color: var(--text-soft); }
-.order-line strong { color: var(--text); font-weight: 500; }
-.order-total { text-align: right; margin-top: 10px; font-family: "IBM Plex Mono", monospace; font-weight: 700; font-size: 1.05rem; }
+.footer-bottom strong { color: var(--gold-light); }
 
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
+@media (max-width: 992px) {
+  .product-detail-layout, .checkout-layout { grid-template-columns: 1fr; gap: 32px; }
+}
+
 @media (max-width: 768px) {
   .site-nav .nav-inner { flex-wrap: wrap; }
-  .nav-links { gap: 16px; }
-  .carousel-caption { left: 6%; right: 6%; max-width: none; }
-  .section-block { padding: 40px 0 4px; }
-  .cart-summary { justify-content: stretch; }
-  .summary-card { width: 100%; }
+  .mobile-nav-toggle { display: block; }
+  .nav-links {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding-top: 14px;
+  }
+  .nav-links.show { display: flex; }
+  .carousel-caption { left: 5%; right: 5%; max-width: none; }
+  .filter-row { flex-direction: column; align-items: stretch; }
+  .search-box { max-width: none; }
 }

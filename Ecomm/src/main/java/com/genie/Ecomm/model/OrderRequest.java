@@ -4,7 +4,6 @@ import java.util.Map;
 
 public class OrderRequest {
 
-
     //key-product id
     //value - quantity
     private Map<Long,Integer> productQuantities;

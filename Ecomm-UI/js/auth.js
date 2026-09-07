@@ -1,5 +1,4 @@
-// Handles the login/register modal and the "current user" session (stored in localStorage,
-// since this project has no real token/session backend yet).
+// Handles login/register modal and current user session (stored in localStorage)
 
 const CURRENT_USER_KEY = "currentUser";
 let authMode = "login"; // "login" | "register"
@@ -20,7 +19,7 @@ function setCurrentUser(user) {
 function logout() {
     localStorage.removeItem(CURRENT_USER_KEY);
     renderAuthState();
-    showToast("Signed out.");
+    showToast("Signed out successfully.", "info");
 }
 
 function renderAuthState() {
@@ -31,26 +30,34 @@ function renderAuthState() {
     if (user) {
         area.innerHTML = `
             <div class="user-chip">
-                <span>Hi, <strong>${user.name}</strong></span>
+                <span>Hi, <strong>${escapeHtml(user.name)}</strong></span>
+                <a href="wishlist.html" class="link-btn" title="Wishlist"><i class="far fa-heart"></i></a>
                 <a href="orders.html" class="link-btn">Orders</a>
                 <button class="link-btn" onclick="logout()">Sign Out</button>
             </div>
         `;
     } else {
-        area.innerHTML = `<button class="link-btn" onclick="openAuth('login')">Sign In</button>`;
+        area.innerHTML = `
+            <a href="wishlist.html" class="link-btn" title="Wishlist" style="margin-right: 12px;"><i class="far fa-heart"></i> Wishlist</a>
+            <button class="link-btn" onclick="openAuth('login')">Sign In</button>
+        `;
     }
 }
 
 function openAuth(mode) {
     authMode = mode;
     applyAuthMode();
-    document.getElementById("authOverlay").classList.add("open");
-    document.getElementById("authError").classList.remove("show");
+    const overlay = document.getElementById("authOverlay");
+    if (overlay) overlay.classList.add("open");
+    const errorEl = document.getElementById("authError");
+    if (errorEl) errorEl.classList.remove("show");
 }
 
 function closeAuth() {
-    document.getElementById("authOverlay").classList.remove("open");
-    document.getElementById("authForm").reset();
+    const overlay = document.getElementById("authOverlay");
+    if (overlay) overlay.classList.remove("open");
+    const form = document.getElementById("authForm");
+    if (form) form.reset();
 }
 
 function toggleAuthMode() {
@@ -60,25 +67,38 @@ function toggleAuthMode() {
 
 function applyAuthMode() {
     const isLogin = authMode === "login";
-    document.getElementById("authTitle").textContent = isLogin ? "Sign in" : "Create an account";
-    document.getElementById("authSub").textContent = isLogin
-        ? "Welcome back. Enter your details to continue."
-        : "Takes about a minute. You'll need this account to check out.";
-    document.getElementById("nameField").style.display = isLogin ? "none" : "block";
-    document.getElementById("authSubmitBtn").textContent = isLogin ? "Sign In" : "Create Account";
-    document.getElementById("authSwitchText").textContent = isLogin ? "New here?" : "Already have an account?";
-    document.getElementById("authSwitchBtn").textContent = isLogin ? "Create an account" : "Sign in instead";
-    document.getElementById("authError").classList.remove("show");
+    const title = document.getElementById("authTitle");
+    const sub = document.getElementById("authSub");
+    const nameField = document.getElementById("nameField");
+    const phoneField = document.getElementById("phoneField");
+    const submitBtn = document.getElementById("authSubmitBtn");
+    const switchText = document.getElementById("authSwitchText");
+    const switchBtn = document.getElementById("authSwitchBtn");
+    const errorEl = document.getElementById("authError");
+
+    if (title) title.textContent = isLogin ? "Sign in to North & Vine" : "Create an account";
+    if (sub) sub.textContent = isLogin
+        ? "Enter your email and password to access your account and orders."
+        : "Takes less than a minute. Save your shipping address and wishlist.";
+    if (nameField) nameField.style.display = isLogin ? "none" : "block";
+    if (phoneField) phoneField.style.display = isLogin ? "none" : "block";
+    if (submitBtn) submitBtn.textContent = isLogin ? "Sign In" : "Create Account";
+    if (switchText) switchText.textContent = isLogin ? "New to North & Vine?" : "Already have an account?";
+    if (switchBtn) switchBtn.textContent = isLogin ? "Create an account" : "Sign in instead";
+    if (errorEl) errorEl.classList.remove("show");
 }
 
 async function handleAuthSubmit(event) {
     event.preventDefault();
     const errorEl = document.getElementById("authError");
-    errorEl.classList.remove("show");
+    if (errorEl) errorEl.classList.remove("show");
 
     const email = document.getElementById("authEmail").value.trim();
     const password = document.getElementById("authPassword").value;
-    const name = document.getElementById("authName").value.trim();
+    const nameInput = document.getElementById("authName");
+    const phoneInput = document.getElementById("authPhone");
+    const name = nameInput ? nameInput.value.trim() : "";
+    const phone = phoneInput ? phoneInput.value.trim() : "";
 
     try {
         let response, payload;
@@ -92,7 +112,7 @@ async function handleAuthSubmit(event) {
             response = await fetch(`${BASE_URL}/users/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, password })
+                body: JSON.stringify({ name, email, password, phone })
             });
         }
 
@@ -101,19 +121,23 @@ async function handleAuthSubmit(event) {
         if (!response.ok) {
             const message = payload.fieldErrors
                 ? Object.values(payload.fieldErrors)[0]
-                : (payload.message || "Something went wrong. Please try again.");
-            errorEl.textContent = message;
-            errorEl.classList.add("show");
+                : (payload.message || payload.error || "Something went wrong. Please try again.");
+            if (errorEl) {
+                errorEl.textContent = message;
+                errorEl.classList.add("show");
+            }
             return false;
         }
 
-        setCurrentUser({ id: payload.id, name: payload.name, email: payload.email });
+        setCurrentUser({ id: payload.id, name: payload.name, email: payload.email, phone: payload.phone });
         closeAuth();
-        showToast(authMode === "login" ? `Welcome back, ${payload.name}.` : `Account created. Welcome, ${payload.name}.`);
+        showToast(authMode === "login" ? `Welcome back, ${payload.name}.` : `Account created. Welcome to North & Vine, ${payload.name}.`, "success");
     } catch (error) {
-        console.log("Auth error:", error);
-        errorEl.textContent = "Could not reach the server. Please make sure it's running.";
-        errorEl.classList.add("show");
+        console.error("Auth error:", error);
+        if (errorEl) {
+            errorEl.textContent = "Could not reach North & Vine server. Please verify backend is running.";
+            errorEl.classList.add("show");
+        }
     }
     return false;
 }

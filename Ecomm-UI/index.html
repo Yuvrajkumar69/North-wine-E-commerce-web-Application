@@ -1,242 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>North &amp; Vine | Department Store</title>
 
-    <!-- Bootstrap (carousel JS behavior only; visual styling is overridden by styles.css) -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>North &amp; Vine | Boutique Department Store</title>
 
-    <!-- Type: Fraunces (display), Work Sans (body), IBM Plex Mono (price tags / labels) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Bootstrap CSS & JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/styles.css" />
+  <!-- Google Fonts: Fraunces (serif), Work Sans (sans), IBM Plex Mono (price tags) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600;700&display=swap"
+    rel="stylesheet" />
 
-    <!-- FontAwesome Icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
-  </head>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
-  <body class="page-body">
-    <!-- NAVBAR -->
-    <nav class="site-nav">
-      <div class="nav-inner">
-        <a class="brand-mark" href="index.html">NORTH <span>&amp;</span> VINE</a>
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
 
-        <ul class="nav-links">
-          <li><a href="#clothing-section">Clothing</a></li>
-          <li><a href="#electronics-section">Electronics</a></li>
-          <li>
-            <a href="cart.html" class="nav-icon-btn" aria-label="Cart">
-              <i class="fas fa-shopping-bag"></i>
-              <span class="cart-badge">0</span>
-            </a>
-          </li>
-          <li id="navAuthArea"><button class="link-btn" onclick="openAuth('login')">Sign In</button></li>
-        </ul>
-      </div>
-    </nav>
+<body class="page-body">
+  <!-- NAVBAR -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a class="brand-mark" href="index.html">NORTH <span>&amp;</span> VINE</a>
 
-    <!-- HERO BANNER: CAROUSEL -->
-    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
-        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
-      </div>
-
-      <div class="carousel-inner">
-        <!-- Banner 1 -->
-        <div class="carousel-item active">
-          <img src="img/img1.png" class="d-block w-100" alt="Fashion" />
-          <div class="carousel-caption">
-            <span class="eyebrow">No. 01 &mdash; Footwear</span>
-            <h2>PUMA, at 30% off</h2>
-            <p>Upgrade your wardrobe with the latest collection.</p>
-            <a href="#trending-section" class="btn-brass">Shop Now</a>
-          </div>
-        </div>
-
-        <!-- Banner 2 -->
-        <div class="carousel-item">
-          <img src="img/img2.png" class="d-block w-100" alt="Shoes" />
-          <div class="carousel-caption">
-            <span class="eyebrow">No. 02 &mdash; Footwear</span>
-            <h2>Exclusive footwear, curated</h2>
-            <p>The best deals on top brands, all season.</p>
-            <a href="#trending-section" class="btn-brass">Shop Now</a>
-          </div>
-        </div>
-
-        <!-- Banner 3 -->
-        <div class="carousel-item">
-          <img src="img/img3.png" class="d-block w-100" alt="Watches" />
-          <div class="carousel-caption">
-            <span class="eyebrow">No. 03 &mdash; Accessories</span>
-            <h2>Timepieces, made to last</h2>
-            <p>Stylish, premium designs for every occasion.</p>
-            <a href="#trending-section" class="btn-brass">Shop Now</a>
-          </div>
-        </div>
-
-        <!-- Banner 4 -->
-        <div class="carousel-item">
-          <img src="img/img4.png" class="d-block w-100" alt="Shirts" />
-          <div class="carousel-caption">
-            <span class="eyebrow">No. 04 &mdash; Clothing</span>
-            <h2>New season, new shirts</h2>
-            <p>Fresh styles for every occasion, now in store.</p>
-            <a href="#clothing-section" class="btn-brass">Shop Now</a>
-          </div>
-        </div>
-      </div>
-
-      <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
+      <button class="mobile-nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-      </button>
+
+      <ul class="nav-links">
+        <li><a href="#trending-section">Featured</a></li>
+        <li><a href="#clothing-section">Clothing</a></li>
+        <li><a href="#electronics-section">Electronics</a></li>
+        <li class="nav-right-actions">
+          <a href="wishlist.html" class="nav-icon-btn" aria-label="Wishlist" title="Wishlist">
+            <i class="far fa-heart"></i>
+          </a>
+          <a href="cart.html" class="nav-icon-btn" aria-label="Shopping Bag" title="Shopping Bag">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="cart-badge">0</span>
+          </a>
+        </li>
+        <li id="navAuthArea">
+          <button class="link-btn" onclick="openAuth('login')">Sign In</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO CAROUSEL -->
+  <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
     </div>
 
-    <!-- PRODUCT CATEGORIES -->
+    <div class="carousel-inner">
+      <!-- Banner 1 -->
+      <div class="carousel-item active">
+        <img src="img/img1.png" class="d-block w-100" alt="Athletic Footwear" />
+        <div class="carousel-caption">
+          <span class="eyebrow light">Collection No. 01</span>
+          <h2>Premium Footwear &amp; Athletics</h2>
+          <p>Elevate your everyday wardrobe with curated athletic performance and comfort.</p>
+          <a href="#trending-section" class="btn-gold">Explore Collection</a>
+        </div>
+      </div>
+
+      <!-- Banner 2 -->
+      <div class="carousel-item">
+        <img src="img/img2.png" class="d-block w-100" alt="Designer Shoes" />
+        <div class="carousel-caption">
+          <span class="eyebrow light">Collection No. 02</span>
+          <h2>Curated Designer Shoes</h2>
+          <p>Handpicked styles designed for modern elegance and timeless durability.</p>
+          <a href="#trending-section" class="btn-gold">Shop Shoes</a>
+        </div>
+      </div>
+
+      <!-- Banner 3 -->
+      <div class="carousel-item">
+        <img src="img/img3.png" class="d-block w-100" alt="Precision Timepieces" />
+        <div class="carousel-caption">
+          <span class="eyebrow light">Collection No. 03</span>
+          <h2>Precision Accessories &amp; Watches</h2>
+          <p>Refined timepieces crafted for sophisticated, timeless distinction.</p>
+          <a href="#electronics-section" class="btn-gold">Discover Timepieces</a>
+        </div>
+      </div>
+
+      <!-- Banner 4 -->
+      <div class="carousel-item">
+        <img src="img/img4.png" class="d-block w-100" alt="Apparel" />
+        <div class="carousel-caption">
+          <span class="eyebrow light">Collection No. 04</span>
+          <h2>New Season Apparel</h2>
+          <p>Fresh tailoring and premium fabrics for every occasion.</p>
+          <a href="#clothing-section" class="btn-gold">View Apparel</a>
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <!-- SEARCH & CATEGORY FILTER BAR -->
+  <div class="search-filter-section">
     <div class="shop-container">
-      <section class="section-block" id="trending-section">
-        <div class="section-head">
-          <div>
-            <span class="eyebrow">Curated picks</span>
-            <h2>Trending Products</h2>
-          </div>
-        </div>
-        <div id="trending-products" class="product-grid">
-          <div class="empty-state">Loading products&hellip;</div>
-        </div>
-      </section>
-
-      <section class="section-block" id="clothing-section">
-        <div class="section-head">
-          <div>
-            <span class="eyebrow">Season 04</span>
-            <h2>Clothing Collection</h2>
-          </div>
-        </div>
-        <div id="clothing-products" class="product-grid"></div>
-      </section>
-
-      <section class="section-block" id="electronics-section">
-        <div class="section-head">
-          <div>
-            <span class="eyebrow">Tech desk</span>
-            <h2>Electronics &amp; Gadgets</h2>
-          </div>
-        </div>
-        <div id="electronics-products" class="product-grid"></div>
-      </section>
-    </div>
-
-    <!-- FOOTER -->
-    <footer class="site-footer">
-      <div class="shop-container">
-        <div class="row">
-          <div class="col-md-3 mb-4">
-            <h5>Online Store</h5>
-            <ul class="footer-list">
-              <li><a href="#">Men's Clothing</a></li>
-              <li><a href="#">Women's Clothing</a></li>
-              <li><a href="#">Accessories</a></li>
-              <li><a href="#">Electronics</a></li>
-            </ul>
-          </div>
-
-          <div class="col-md-3 mb-4">
-            <h5>Helpful Links</h5>
-            <ul class="footer-list">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="cart.html">Cart</a></li>
-              <li><a href="orders.html">My Orders</a></li>
-            </ul>
-          </div>
-
-          <div class="col-md-3 mb-4">
-            <h5>Brand Partners</h5>
-            <ul class="footer-list">
-              <li>Zara</li>
-              <li>Pantaloons</li>
-              <li>Levi's</li>
-              <li>UCB</li>
-              <li>+ Many More</li>
-            </ul>
-          </div>
-
-          <div class="col-md-3 mb-4">
-            <h5>Address</h5>
-            <ul class="footer-list">
-              <li>Building A7/145</li>
-              <li>CPP COLONY</li>
-              <li>NAINITAL &ndash; 262402</li>
-              <li>UTTRAKHAND (INDIA)</li>
-            </ul>
-          </div>
+      <div class="filter-row">
+        <div class="search-box">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="searchInput" placeholder="Search North &amp; Vine products..."
+            onkeyup="handleSearch(event)" />
         </div>
 
-        <div class="footer-bottom">
-          &copy; 2026 <strong>North &amp; Vine</strong> &mdash; a portfolio project by built on Spring Boot &amp; vanilla JS.
-        </div>
-      </div>
-    </footer>
-
-    <!-- AUTH MODAL -->
-    <div class="auth-overlay" id="authOverlay">
-      <div class="auth-card-wrap">
-        <div class="auth-card">
-          <button class="auth-close" onclick="closeAuth()" aria-label="Close">&times;</button>
-          <h3 id="authTitle">Sign in</h3>
-          <p class="sub" id="authSub">Welcome back. Enter your details to continue.</p>
-          <form id="authForm" onsubmit="return handleAuthSubmit(event)">
-            <div class="field" id="nameField" style="display:none">
-              <label for="authName">Full name</label>
-              <input type="text" id="authName" autocomplete="name" />
-            </div>
-            <div class="field">
-              <label for="authEmail">Email</label>
-              <input type="email" id="authEmail" autocomplete="email" required />
-            </div>
-            <div class="field">
-              <label for="authPassword">Password</label>
-              <input type="password" id="authPassword" autocomplete="current-password" required />
-            </div>
-            <div class="field-error" id="authError"></div>
-            <button type="submit" class="btn-brass" id="authSubmitBtn" style="width:100%;justify-content:center;">Sign In</button>
-          </form>
-          <div class="auth-switch">
-            <span id="authSwitchText">New here?</span>
-            <button type="button" onclick="toggleAuthMode()" id="authSwitchBtn">Create an account</button>
-          </div>
+        <div class="category-pills" id="categoryPills">
+          <button class="category-pill active" onclick="filterCategory(null, this)">All Products</button>
+          <button class="category-pill" onclick="filterCategory('Clothing', this)">Clothing</button>
+          <button class="category-pill" onclick="filterCategory('Electronics', this)">Electronics</button>
+          <button class="category-pill" onclick="filterCategory('Accessories', this)">Accessories</button>
+          <button class="category-pill" onclick="filterCategory('Footwear', this)">Footwear</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- JavaScript & Bootstrap -->
-    <script src="js/api.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/cart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- MAIN PRODUCT SECTIONS -->
+  <div class="shop-container">
+    <section class="section-block" id="trending-section">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Curated picks</span>
+          <h2>Featured Products</h2>
+        </div>
+      </div>
+      <div id="trending-products" class="product-grid">
+        <div class="skeleton-card skeleton-anim"></div>
+        <div class="skeleton-card skeleton-anim"></div>
+        <div class="skeleton-card skeleton-anim"></div>
+        <div class="skeleton-card skeleton-anim"></div>
+      </div>
+    </section>
 
-    <script>
+    <section class="section-block" id="clothing-section">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Apparel &amp; Fashion</span>
+          <h2>Clothing Collection</h2>
+        </div>
+      </div>
+      <div id="clothing-products" class="product-grid"></div>
+    </section>
+
+    <section class="section-block" id="electronics-section">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Innovation &amp; Tech</span>
+          <h2>Electronics &amp; Gadgets</h2>
+        </div>
+      </div>
+      <div id="electronics-products" class="product-grid"></div>
+    </section>
+  </div>
+
+  <!-- AUTH MODAL -->
+  <div class="auth-overlay" id="authOverlay" onclick="if(event.target===this) closeAuth()">
+    <div class="auth-card">
+      <button class="auth-close" onclick="closeAuth()">&times;</button>
+      <h3 id="authTitle">Sign in to North &amp; Vine</h3>
+      <p class="sub" id="authSub">Welcome back. Enter your details to continue.</p>
+
+      <form id="authForm" onsubmit="return handleAuthSubmit(event)">
+        <div class="field" id="nameField" style="display: none;">
+          <label for="authName">Full Name</label>
+          <input type="text" id="authName" placeholder="Jane Doe" />
+        </div>
+
+        <div class="field">
+          <label for="authEmail">Email Address</label>
+          <input type="email" id="authEmail" required placeholder="name@example.com" />
+        </div>
+
+        <div class="field">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <label for="authPassword" style="margin:0;">Password</label>
+            <a href="forgot-password.html" style="font-size:0.75rem; color:var(--wine); font-weight:600;"
+              onclick="closeAuth()">Forgot password?</a>
+          </div>
+          <input type="password" id="authPassword" required placeholder="••••••••" />
+        </div>
+
+        <div class="field" id="phoneField" style="display: none;">
+          <label for="authPhone">Phone Number</label>
+          <input type="tel" id="authPhone" placeholder="7500554902" />
+        </div>
+
+        <div class="field-error" id="authError"></div>
+
+        <button type="submit" class="btn-wine w-100 justify-content-center" id="authSubmitBtn"
+          style="margin-top: 12px;">Sign In</button>
+      </form>
+
+      <div class="auth-switch">
+        <span id="authSwitchText">New here?</span>
+        <button id="authSwitchBtn" onclick="toggleAuthMode()">Create an account</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="shop-container">
+      <div class="row">
+        <div class="col-md-3 mb-4">
+          <a class="brand-mark mb-3 d-inline-block" href="index.html">NORTH <span>&amp;</span> VINE</a>
+          <p style="font-size: 0.85rem; color: var(--text-on-ink-soft);">
+            A boutique department store offering curated fashion, luxury accessories, and premium electronics.
+          </p>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <h5>Categories</h5>
+          <ul class="footer-list">
+            <li><a href="#clothing-section">Clothing &amp; Apparel</a></li>
+            <li><a href="#electronics-section">Electronics &amp; Tech</a></li>
+            <li><a href="#trending-section">Footwear &amp; Shoes</a></li>
+            <li><a href="#trending-section">Watches &amp; Accessories</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <h5>Customer Care</h5>
+          <ul class="footer-list">
+            <li><a href="cart.html">Shopping Bag</a></li>
+            <li><a href="wishlist.html">My Wishlist</a></li>
+            <li><a href="orders.html">Order Tracking</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3 mb-4">
+          <h5>North &amp; Vine Store</h5>
+          <p style="font-size: 0.85rem; color: var(--text-on-ink-soft); line-height: 1.6;">
+            Durga City Center<br />
+            Haldwani, Uttarakhand, India<br />
+            Email: singhpunam5091@gmail.com<br />
+            Phone: 7500554902
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        &copy; 2026 <strong>North &amp; Vine</strong>. All rights reserved. All prices listed in INR (₹).
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/wishlist.js"></script>
+  <script>
+    let searchTimeout = null;
+    function handleSearch(e) {
+      clearTimeout(searchTimeout);
+      const query = e.target.value.trim();
+      searchTimeout = setTimeout(() => {
+        loadProducts(null, query);
+      }, 350);
+    }
+
+    function filterCategory(cat, pillEl) {
+      document.querySelectorAll(".category-pill").forEach(p => p.classList.remove("active"));
+      if (pillEl) pillEl.classList.add("active");
+      const searchInput = document.getElementById("searchInput");
+      if (searchInput) searchInput.value = "";
+      loadProducts(cat, null);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
       loadProducts();
-    </script>
-  </body>
+    });
+  </script>
+</body>
+
 </html>

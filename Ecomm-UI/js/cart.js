@@ -1,8 +1,12 @@
-// Shared cart utilities - cart is always read fresh from localStorage to avoid stale state
+// North & Vine — Cart Utilities (localStorage backed)
 const CART_STORAGE_KEY = "cart";
 
 function getCart() {
-    return JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
+    try {
+        return JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
+    } catch (e) {
+        return [];
+    }
 }
 
 function saveCart(cart) {
@@ -11,14 +15,14 @@ function saveCart(cart) {
 
 function loadCart() {
     let cartItems = document.getElementById("cart-items");
-    if (!cartItems) return; // not on the cart page (e.g. index.html also loads this script)
+    if (!cartItems) return;
 
     let cart = getCart();
     let totalAmount = 0;
     cartItems.innerHTML = "";
 
     if (cart.length === 0) {
-        cartItems.innerHTML = `<tr><td colspan="5" class="text-center" style="padding:36px 16px;color:var(--text-soft);">Your cart is empty. <a href="index.html" style="color:var(--brass-deep);font-weight:600;">Continue shopping &rarr;</a></td></tr>`;
+        cartItems.innerHTML = `<tr><td colspan="6" class="text-center" style="padding:48px 16px;color:var(--text-soft);">Your shopping bag is empty. <a href="index.html" style="color:var(--gold-deep);font-weight:600;">Continue browsing &rarr;</a></td></tr>`;
     }
 
     cart.forEach((item, index) => {
@@ -27,9 +31,11 @@ function loadCart() {
 
         cartItems.innerHTML += `
             <tr>
-                <td><img class="cart-thumb" src="${item.imageUrl}" alt="${item.name}"></td>
-                <td>${item.name}</td>
-                <td class="mono">₹${item.price}</td>
+                <td><img class="cart-thumb" src="${item.imageUrl || 'img/img1.png'}" alt="${escapeHtml(item.name)}" onerror="this.src='img/img1.png'"></td>
+                <td style="font-weight: 500;">
+                    <a href="product-detail.html?id=${item.id}" style="color:var(--text);">${escapeHtml(item.name)}</a>
+                </td>
+                <td class="mono">${formatCurrency(item.price)}</td>
                 <td>
                     <div class="qty-control">
                         <button onclick="changeQuantity(${index},-1)" aria-label="Decrease quantity">&minus;</button>
@@ -37,121 +43,94 @@ function loadCart() {
                         <button onclick="changeQuantity(${index},1)" aria-label="Increase quantity">+</button>
                     </div>
                 </td>
-                <td class="mono" style="font-weight:600;">₹${itemTotal}</td>
+                <td class="mono" style="font-weight:600; color:var(--gold-light);">${formatCurrency(itemTotal)}</td>
                 <td><button class="remove-btn" onclick="removeItem(${index})" aria-label="Remove item">&times;</button></td>
             </tr>
         `;
     });
 
     let totalEl = document.getElementById("total-amount");
-    if (totalEl) totalEl.innerText = totalAmount;
+    if (totalEl) totalEl.innerText = formatCurrency(totalAmount);
     let totalEl2 = document.getElementById("total-amount-2");
-    if (totalEl2) totalEl2.innerText = totalAmount;
+    if (totalEl2) totalEl2.innerText = formatCurrency(totalAmount);
 
     let itemCountEl = document.getElementById("item-count");
     if (itemCountEl) itemCountEl.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
 }
 
-function addToCart(id,name,price,imageUrl)
-{
-    price=parseFloat(price);
+function addToCart(id, name, price, imageUrl, qtyToAdd = 1) {
+    price = parseFloat(price);
     let cart = getCart();
-    let itemIndex=cart.findIndex((item) => item.id===id)
-    if(itemIndex!==-1)
-    {
-        cart[itemIndex].quantity+=1;
-    }
-    else{
+    let itemIndex = cart.findIndex((item) => item.id === id);
+
+    if (itemIndex !== -1) {
+        cart[itemIndex].quantity += qtyToAdd;
+    } else {
         cart.push({
-            id:id,
+            id: id,
             name: name,
             price: price,
-            imageUrl:imageUrl,
-            quantity:1
+            imageUrl: imageUrl,
+            quantity: qtyToAdd
         });
     }
+
     saveCart(cart);
     updateCartCounter();
-    if (typeof showToast === "function") showToast(`Added "${name}" to cart.`);
+    if (typeof showToast === "function") showToast(`Added "${name}" to shopping bag.`, "success");
 }
 
+function buyNow(id, name, price, imageUrl, qtyToAdd = 1) {
+    addToCart(id, name, price, imageUrl, qtyToAdd);
+    window.location.href = "checkout.html";
+}
 
-function updateCartCounter()
-{
-    let badge = document.querySelector(".cart-badge");
-    if (!badge) return; // not on a page that has the navbar cart icon
+function updateCartCounter() {
+    let badges = document.querySelectorAll(".cart-badge");
+    if (!badges || badges.length === 0) return;
     let cart = getCart();
-    badge.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
+    let totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+    badges.forEach(badge => badge.innerText = totalQty);
 }
 
-
-function changeQuantity(index,change)
-{
+function changeQuantity(index, change) {
     let cart = getCart();
     if (!cart[index]) return;
-    cart[index].quantity+=change;
-    if(cart[index].quantity<=0) cart.splice(index,1);
+    cart[index].quantity += change;
+    if (cart[index].quantity <= 0) cart.splice(index, 1);
     saveCart(cart);
     loadCart();
     updateCartCounter();
 }
 
-function removeItem(index)
-{
+function removeItem(index) {
     let cart = getCart();
-    cart.splice(index,1);
-    saveCart(cart);
-    loadCart();
-    updateCartCounter();
-    if (typeof showToast === "function") showToast("Item removed from cart.");
+    if (cart[index]) {
+        const name = cart[index].name;
+        cart.splice(index, 1);
+        saveCart(cart);
+        loadCart();
+        updateCartCounter();
+        if (typeof showToast === "function") showToast(`Removed "${name}" from bag.`, "info");
+    }
 }
 
-async function checkout()
-{
+function proceedToCheckout() {
     let cart = getCart();
     if (cart.length === 0) {
-        showToast("Your cart is empty.", "error");
+        if (typeof showToast === "function") showToast("Your shopping bag is empty.", "error");
         return;
     }
 
     const user = typeof getCurrentUser === "function" ? getCurrentUser() : null;
     if (!user) {
-        showToast("Please sign in to check out.", "error");
+        if (typeof showToast === "function") showToast("Please sign in to proceed to checkout.", "info");
         if (typeof openAuth === "function") openAuth("login");
         return;
     }
 
-    let productQuantities = {};
-    let totalAmount = 0;
-    cart.forEach((item) => {
-        productQuantities[item.id] = item.quantity;
-        totalAmount += item.price * item.quantity;
-    });
-
-    try {
-        const response = await fetch(`${BASE_URL}/orders/place/${user.id}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ productQuantities, totalAmount })
-        });
-
-        const payload = await response.json();
-
-        if (!response.ok) {
-            throw new Error(payload.message || `Order failed with status ${response.status}`);
-        }
-
-        showToast(`Order #${payload.id} placed successfully!`);
-        localStorage.removeItem(CART_STORAGE_KEY);
-        loadCart();
-        updateCartCounter();
-        setTimeout(() => { window.location.href = "orders.html"; }, 900);
-    } catch (error) {
-        console.log("Error placing order:", error);
-        showToast(error.message || "Could not place your order.", "error");
-    }
+    window.location.href = "checkout.html";
 }
-
 
 document.addEventListener("DOMContentLoaded", () => {
     loadCart();
