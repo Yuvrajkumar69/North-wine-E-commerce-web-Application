@@ -1,7 +1,7 @@
 // North & Vine API Configuration & Core Renderers
 const BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:')
     ? 'http://localhost:8080'
-    : 'https://north-wine-e-commerce-web-application-production.up.railway.app';
+    : 'https://north-wine-e-commerce-web-application.onrender.com';
 
 function escapeForAttr(str) {
     if (!str) return '';
